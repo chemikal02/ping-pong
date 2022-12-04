@@ -15,7 +15,17 @@ finish = False
 clock = time.Clock()
 FPS = 60
 
+class Player(GameSprite):
+    def __init__(self, player_image, player_x, player_y, player_speed):
+        super().__init__(player_image, player_x, player_y, player_speed)
+    def update(self):
+        keys_pressed=key.get_pressed()
+        if keys_pressed[K_w] and self.rect.y > 5:
+            self.rect.x -= self.speed
+        if keys_pressed[K_s] and self.rect.y < -650:
+            self.rect.x += self.speed
 
+player =Player('racket.png')
 
 
 
