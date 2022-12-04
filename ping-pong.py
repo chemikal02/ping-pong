@@ -1,14 +1,21 @@
 from pygame import *
-font.init()
 from random import randint
+
+
 font.init()
 font1 = font.Font(None, 36)
+lose1 = font1.render(
+    'PLAYER 1 LOSE!', True, (180, 0 , 0))
+
+font2 = font.Font(None, 36)
+lose2 = font1.render(
+    'PLAYER 2 LOSE!', True, (180, 0 , 0))
 
 window = display.set_mode((700,500))
 display.set_caption("Пинг-понг")
 
 background = transform.scale(
-    image.load('phon.png'),
+    image.load('phon.jpg'),
     (700,500))
 
 finish = False
@@ -33,26 +40,26 @@ class Player(GameSprite):
         super().__init__(player_image, player_x, player_y, player_speed)
     def update(self):
         keys_pressed=key.get_pressed()
-        if keys_pressed[K_w] and self.rect.y > 5:
-            self.rect.x -= self.speed
-        if keys_pressed[K_s] and self.rect.y < -650:
-            self.rect.x += self.speed
+        if keys_pressed[K_w] and self.rect.y > 0:
+            self.rect.y -= self.speed
+        if keys_pressed[K_s] and self.rect.x < 650:
+            self.rect.y += self.speed
 
-player = Player('racket.png' 20, 400, 5)
+player = Player('biba.png', 600, 250, 5)
 
 class Player2(GameSprite):
     def __init__(self, player2_image, player2_x, player2_y, player2_speed):
         super().__init__(player2_image, player2_x, player2_y, player2_speed)
     def update(self):
         keys_pressed=key.get_pressed()
-        if keys_pressed[K_UP] and self.rect.y > 5:
-            self.rect.x -= self.speed
-        if keys_pressed[K_DOWN] and self.rect.y < -650:
-            self.rect.x += self.speed
+        if keys_pressed[K_UP] and self.rect.y > 0:
+            self.rect.y -= self.speed
+        if keys_pressed[K_DOWN] and self.rect.x < 650:
+            self.rect.y += self.speed
 
-player2 = Player('racket.png1', 20, 20, 5)
+player2 = Player2('rocket_1_prev_ui.png', 20, 250, 5)
             
-ball = GameSprite(ball.jpg)
+ball = GameSprite('ball_prev_ui.png', 300, 250, 5)
 
 
 
@@ -61,9 +68,17 @@ while game:
     for e in event.get():
         if e.type == QUIT:
             game = False
+
     if finish != True:
-        ball.rect.x += speed_x
-        ball.rect.y -= speed_y
+        
+        #ball.rect.x += speed_x
+        #ball.rect.y -= speed_y
+        window.blit(background, (0,0)) 
+        ball.reset()
+        player.reset()
+        player.update()
+        player2.reset()
+        player2.update()
 
 
     clock.tick(FPS)       
